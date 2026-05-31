@@ -1,0 +1,103 @@
+[project]
+  name = 'number-checker-bot'
+  version = '0.1.0'
+  description = 'Add your description here'
+  readme = 'README.md'
+  requires-python = '==3.14.*'
+  dependencies = [
+    'asyncclick==8.3.0.7',
+    'asyncpg==0.31.0',
+    'colorlog==6.10.1',
+    'fs==2.4.16',
+    'python-dateutil==2.9.0.post0',
+    'regex==2026.4.4',
+    'sqlalchemy==2.0.49',
+  ]
+[project.optional-dependencies]
+  linux = ['uvloop==0.22.1']
+[dependency-groups]
+  dev = ['jurigged==0.6.1', 'pyright==1.1.409', 'ruff==0.15.12']
+  # bot = [
+  #   'aiohttp[speedups]==3.13.5',
+  #   'aiolimiter==1.2.1',
+  #   'aiosqlite==0.22.1',
+  #   'apscheduler==3.11.2',
+  #   'httpx==0.28.1',
+  #   'kurigram==2.2.22',
+  #   'email-validator==2.3.0',
+  #   'openpyxl==3.1.5',
+  #   'pycountry==26.2.16',
+  #   'pymorphy3==2.0.6',
+  #   'python-socketio==5.16.1',
+  #   'tgcrypto-pyrofork==1.2.8',
+  #   'xlrd==2.0.2',
+  #   "capsolver==1.0.7",
+  #   "phonenumbers==9.0.29",
+  # ]
+  db = ['inflect==7.5.0', 'psycopg[binary,pool]==3.3.4']
+  db_dev = ['alembic==1.18.4', 'click==8.3.3']
+  # wrapper = [
+  #   "beautifulsoup4==4.14.3",
+  #   "capsolver==1.0.7",
+  #   "flask==3.1.3",
+  #   "phonenumbers==9.0.29",
+  #   "patchright==1.59.1",
+  # ]
+
+[tool.ruff]
+  line-length = 79
+  indent-width = 4
+  exclude = [
+    '.bzr',
+    '.direnv',
+    '.eggs',
+    '.git',
+    '.git-rewrite',
+    '.hg',
+    '.ipynb_checkpoints',
+    '.mypy_cache',
+    '.nox',
+    '.pants.d',
+    '.pyenv',
+    '.pytest_cache',
+    '.pytype',
+    '.ruff_cache',
+    '.svn',
+    '.tox',
+    '.venv',
+    '.vscode',
+    '.pyi',
+    '.pyc',
+    '__pypackages__',
+    '__pycache__',
+    '_build',
+    'buck-out',
+    'build',
+    'dist',
+    'node_modules',
+    'site-packages',
+    'venv',
+    'typings',
+  ]
+
+[tool.ruff.lint]
+  select = ['E4', 'E7', 'E9', 'F']
+  ignore = []
+  fixable = ['ALL']
+  unfixable = []
+  dummy-variable-rgx = '^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$'
+
+[tool.ruff.lint.isort]
+  combine-as-imports = true
+  lines-after-imports = 2
+
+[tool.ruff.format]
+  quote-style = 'single'
+  indent-style = 'space'
+  skip-magic-trailing-comma = false
+  line-ending = 'auto'
+  docstring-code-format = false
+  docstring-code-line-length = 'dynamic'
+
+[tool.ruff.mccabe]
+  max-complexity = 10
