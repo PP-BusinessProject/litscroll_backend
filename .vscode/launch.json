@@ -1,0 +1,44 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "api (dev)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "litscroll_api",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env",
+      "env": {
+        "LOGGING": "DEBUG"
+      },
+    },
+    {
+      "name": "db (dev)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "litscroll_db",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": {
+        "LOGGING": "DEBUG",
+        "DATABASE_URL": "postgres:postgres@localhost:5432/litscroll"
+      }
+    },
+    {
+      "name": "db (prod)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "litscroll_db",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env",
+      "env": {
+        "LOGGING": "DEBUG"
+      },
+    },
+  ]
+}

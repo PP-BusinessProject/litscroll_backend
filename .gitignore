@@ -4,7 +4,6 @@ cache/
 .chromium
 
 # Local
-.vscode
 fly.toml
 
 # Byte-compiled / optimized / DLL files
