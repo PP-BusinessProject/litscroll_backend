@@ -73,11 +73,39 @@ def _select_public_models() -> Iterable[Base]:
 
 
 def create_schema(schema: str, /) -> DDL:
+    if schema == 'auth':
+        return DDL("""DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_proc p
+        JOIN pg_namespace n ON n.oid = p.pronamespace
+        WHERE p.proname = 'uid'
+            AND n.nspname = 'auth'
+            AND p.pronargs = 0
+    ) THEN
+        CREATE SCHEMA IF NOT EXISTS auth;
+
+        CREATE FUNCTION auth.uid()
+        RETURNS uuid
+        LANGUAGE sql
+        STABLE
+        AS $func$
+        SELECT COALESCE(
+            current_setting('request.jwt.claim.sub', true)::uuid,
+            '00000000-0000-0000-0000-000000000001'::uuid
+        );
+        $func$;
+    END IF;
+END
+$$;
+""")
+
     return DDL(f'CREATE SCHEMA IF NOT EXISTS {schema}')
 
 
 def drop_schema(schema: str, /) -> DDL:
-    return DDL(f'DROP SCHEMA IF EXISTS {schema}')
+    return DDL(f'DROP SCHEMA IF EXISTS {schema} CASCADE')
 
 
 def create_extension(extension: str, /) -> DDL:
@@ -356,6 +384,27 @@ def upgrade() -> None:
     runs_linux = 'gcc' in get_bind().scalar(select(func.version()))
     extensions: set[str] = {'btree_gist', 'cube', 'earthdistance'}
     model: Base
+    for role in {
+        role
+        for model in _select_public_models()
+        for role in model.__permissions__ or {}
+    }:
+        listen(
+            Base.metadata,
+            'before_create',
+            DDL(f"""DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_roles
+        WHERE rolname = '{role}'
+    ) THEN
+        CREATE ROLE {role};
+    END IF;
+END
+$$;"""),
+        )
+
     for model in _select_public_models():
         if model.__tablename__.startswith('_'):
             continue
@@ -381,6 +430,7 @@ def upgrade() -> None:
                 else:
                     for ddl in get_materialized_refresh_trigger(model):
                         listen(Base.metadata, 'after_create', ddl)
+
         for permission in grant_permissions(model):
             listen(Base.metadata, 'after_create', permission)
         if policies := create_policies(model):
