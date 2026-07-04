@@ -5,6 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "test",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "litscroll_test",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env.test",
+      "env": {
+        "LOGGING": "DEBUG"
+      },
+    },
+    {
       "name": "api (dev)",
       "type": "debugpy",
       "request": "launch",
