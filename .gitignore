@@ -4,7 +4,6 @@ cache/
 .chromium
 
 # Local
-.vscode
 fly.toml
 
 # Byte-compiled / optimized / DLL files
@@ -32,6 +31,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+uv.lock
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -119,7 +119,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+.env*
 .venv
 env/
 venv/

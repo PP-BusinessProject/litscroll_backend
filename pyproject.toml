@@ -1,5 +1,5 @@
 [project]
-  name = 'number-checker-bot'
+  name = 'liscroll-backend'
   version = '0.1.0'
   description = 'Add your description here'
   readme = 'README.md'
@@ -16,33 +16,26 @@
 [project.optional-dependencies]
   linux = ['uvloop==0.22.1']
 [dependency-groups]
+  api = ['uvicorn==0.49.0', 'fastapi==0.139.0', 'pydantic-settings==2.14.2']
   dev = ['jurigged==0.6.1', 'pyright==1.1.409', 'ruff==0.15.12']
-  # bot = [
-  #   'aiohttp[speedups]==3.13.5',
-  #   'aiolimiter==1.2.1',
-  #   'aiosqlite==0.22.1',
-  #   'apscheduler==3.11.2',
-  #   'httpx==0.28.1',
-  #   'kurigram==2.2.22',
-  #   'email-validator==2.3.0',
-  #   'openpyxl==3.1.5',
-  #   'pycountry==26.2.16',
-  #   'pymorphy3==2.0.6',
-  #   'python-socketio==5.16.1',
-  #   'tgcrypto-pyrofork==1.2.8',
-  #   'xlrd==2.0.2',
-  #   "capsolver==1.0.7",
-  #   "phonenumbers==9.0.29",
-  # ]
   db = ['inflect==7.5.0', 'psycopg[binary,pool]==3.3.4']
   db_dev = ['alembic==1.18.4', 'click==8.3.3']
-  # wrapper = [
-  #   "beautifulsoup4==4.14.3",
-  #   "capsolver==1.0.7",
-  #   "flask==3.1.3",
-  #   "phonenumbers==9.0.29",
-  #   "patchright==1.59.1",
-  # ]
+  test = ['pytest==9.1.1', 'httpx==0.28.1', 'pytest-asyncio==1.4.0']
+
+[tool.pytest.ini_options]
+  minversion = "8.0"
+  testpaths = ["litscroll_test/api"]
+  python_files = ["test_*.py"]
+  python_classes = ["Test*"]
+  python_functions = ["test_*"]
+  asyncio_mode = "auto"
+  addopts = ["-v", "--tb=short", "--strict-markers", "--disable-warnings"]
+  markers = [
+    "api: API integration tests",
+    "repository: Repository tests",
+    "service: Service tests",
+    "db: Database tests",
+  ]
 
 [tool.ruff]
   line-length = 79
