@@ -48,7 +48,7 @@ python --version
 Установите менеджер зависимостей **uv**:
 
 ```powershell
-pip install -U uv
+Set-ExecutionPolicy ByPass; irm https://astral.sh/uv/install.ps1 | iex
 ```
 
 Проверьте установку:
@@ -59,16 +59,66 @@ uv --version
 
 ---
 
-# 4. Клонирование проекта
+# 4. Установка PostgreSQL (для локального запуска)
 
-```bash
-git clone https://github.com/PP-BusinessProject/litscroll_backend
-cd litscroll_backend
+> Данный шаг необходим только при запуске проекта с локальной базой данных.
+
+Установите PostgreSQL через Chocolatey:
+
+```powershell
+choco install postgresql -y
 ```
+
+После установки убедитесь, что PostgreSQL запущен.
+
+Подключитесь к серверу PostgreSQL с помощью `psql`:
+
+```powershell
+psql -U postgres
+```
+
+Создайте базу данных проекта:
+
+```sql
+CREATE DATABASE litscroll;
+```
+
+Для подключения используйте одну из следующих строк:
+
+Если используется пользователь `postgres`:
+
+```text
+DATABASE_URL=postgres:<пароль>@localhost:5432/litscroll
+```
+---
+
+
+# 5. Клонирование проекта
+
+Для клонирования репозитория рекомендуется использовать **GitHub Desktop**.
+
+1. Установите **GitHub Desktop**, если он еще не установлен.
+2. Авторизуйтесь в своей учетной записи GitHub.
+3. Выберите **File → Clone Repository...**.
+4. Перейдите на вкладку **URL**.
+5. Вставьте URL репозитория:
+
+```text
+https://github.com/PP-BusinessProject/litscroll_backend
+```
+
+6. Выберите локальную папку, в которую будет склонирован проект.
+7. Нажмите **Clone**.
+
+После завершения клонирования откройте папку проекта в **Visual Studio Code**:
+
+- В GitHub Desktop выберите **Repository → Open in Visual Studio Code**.
+
+Либо откройте папку проекта вручную через **File → Open Folder...** в Visual Studio Code.
 
 ---
 
-# 5. Инициализация проекта
+# 6. Инициализация проекта
 
 Установите все зависимости проекта:
 
@@ -80,7 +130,7 @@ uv sync --all-groups
 
 ---
 
-# 6. Настройка файла конфигурации
+# 7. Настройка файла конфигурации
 
 Перед первым запуском необходимо создать файл окружения.
 
@@ -96,20 +146,20 @@ uv sync --all-groups
 Формат:
 
 ```text
-postgresql+asyncpg://<пользователь>:<пароль>@<хост>:<порт>/<база_данных>
+<пользователь>:<пароль>@<хост>:<порт>/<база_данных>
 ```
 
 Пример:
 
 ```text
-DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/litscroll
+DATABASE_URL=postgres:postgres@localhost:5432/litscroll
 ```
 
 Если база данных запущена локально через Docker, обычно достаточно изменить только имя базы данных, пользователя и пароль в соответствии с вашей конфигурацией.
 
 ---
 
-# 7. Запуск проекта
+# 8. Запуск проекта
 
 Откройте проект в **Visual Studio Code**.
 
@@ -131,7 +181,7 @@ uv sync --all-groups
 
 ---
 
-# Полезные команды
+# 9. Полезные команды
 
 Проверить версию Python:
 
