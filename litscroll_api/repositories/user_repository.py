@@ -15,11 +15,18 @@ class UserRepository:
     async def get_by_id(self, user_id: int) -> User | None:
         return await self.session.get(User, user_id)
 
-    async def get_user_quotes(self, user_id: UUID) -> list[BookQuote]:
+    async def get_user_quotes(
+        self,
+        user_id: UUID,
+        offset: int,
+        limit: int,
+    ) -> list[BookQuote]:
         result = await self.session.execute(
             select(BookQuote)
             .join(BookQuoteUser, BookQuoteUser.quote_id == BookQuote.id)
             .where(BookQuoteUser.user_id == user_id)
+            .offset(offset)
+            .limit(limit)
         )
 
         return result.scalars().all()
@@ -104,7 +111,12 @@ class UserRepository:
 
         await self.session.commit()
 
-    async def get_favorites(self, user_id: UUID) -> list[BookQuote]:
+    async def get_favorites(
+        self,
+        user_id: UUID,
+        offset: int,
+        limit: int,
+    ) -> list[BookQuote]:
         result = await self.session.execute(
             select(BookQuote)
             .join(BookQuoteUser, BookQuoteUser.quote_id == BookQuote.id)
@@ -112,6 +124,8 @@ class UserRepository:
                 BookQuoteUser.user_id == user_id,
                 BookQuoteUser.liked_at.is_not(None),
             )
+            .offset(offset)
+            .limit(limit)
         )
 
         return result.scalars().all()

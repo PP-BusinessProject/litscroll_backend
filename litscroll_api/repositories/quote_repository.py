@@ -13,9 +13,17 @@ class QuoteRepository:
     async def get_by_id(self, quote_id: int) -> BookQuote | None:
         return await self.session.get(BookQuote, quote_id)
 
-    async def get_by_book(self, book_id: int) -> list[BookQuote]:
+    async def get_by_book(
+        self,
+        book_id: int,
+        offset: int,
+        limit: int,
+    ) -> list[BookQuote]:
         result = await self.session.execute(
-            select(BookQuote).where(BookQuote.book_id == book_id)
+            select(BookQuote)
+            .where(BookQuote.book_id == book_id)
+            .offset(offset)
+            .limit(limit)
         )
 
         return result.scalars().all()
@@ -23,6 +31,7 @@ class QuoteRepository:
     async def get_suggested_for_user(
         self,
         user_id: UUID,
+        offset: int,
         limit: int = 10,
     ) -> list[BookQuote]:
         subquery = select(BookQuoteUser.quote_id).where(
@@ -33,14 +42,18 @@ class QuoteRepository:
             select(BookQuote)
             .where(BookQuote.id.not_in(subquery))
             .order_by(desc(BookQuote.like_count))
+            .offset(offset)
             .limit(limit)
         )
 
         return result.scalars().all()
 
-    async def get_popular(self, limit: int) -> list[BookQuote]:
+    async def get_popular(self, offset: int, limit: int) -> list[BookQuote]:
         result = await self.session.execute(
-            select(BookQuote).order_by(desc(BookQuote.like_count)).limit(limit)
+            select(BookQuote)
+            .order_by(desc(BookQuote.like_count))
+            .offset(offset)
+            .limit(limit)
         )
 
         return result.scalars().all()
