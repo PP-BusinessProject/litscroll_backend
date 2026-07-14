@@ -7,9 +7,7 @@ class Settings(BaseSettings):
     debug: bool = False
     database_url: str
 
-    model_config = SettingsConfigDict(
-        case_sensitive=False, extra='ignore', env_file='.env.dev'
-    )
+    model_config = SettingsConfigDict(case_sensitive=False, extra='ignore')
 
 
 @lru_cache
