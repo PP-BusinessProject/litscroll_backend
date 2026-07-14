@@ -25,7 +25,7 @@ async def by_book(
     limit: int = 20,
     repo: QuoteRepository = Depends(get_quote_repository),
 ):
-    return await repo.get_by_book(offset, limit, book_id)
+    return await repo.get_by_book(book_id, offset, limit)
 
 
 @router.get('/suggested/{user_id}')

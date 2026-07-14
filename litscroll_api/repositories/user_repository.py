@@ -69,7 +69,7 @@ class UserRepository:
                 BookQuoteUser.user_id == user_id,
                 BookQuoteUser.quote_id == quote_id,
             )
-            .values(finished_at=datetime.now(UTC))
+            .values(finished_at=datetime.now())
         )
         await self.session.commit()
 
@@ -81,7 +81,7 @@ class UserRepository:
                 BookQuoteUser.quote_id == quote_id,
                 BookQuoteUser.liked_at.is_(None),
             )
-            .values(liked_at=datetime.now(UTC))
+            .values(liked_at=datetime.now())
         )
 
         await self.session.execute(

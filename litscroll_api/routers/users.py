@@ -11,7 +11,7 @@ router = APIRouter(prefix='/users', tags=['Users'])
 
 @router.get('/{user_id}')
 async def get_user(
-    user_id: int,
+    user_id: UUID,
     repo: UserRepository = Depends(get_user_repository),
 ):
     user = await repo.get_by_id(user_id)
@@ -29,10 +29,10 @@ async def user_quotes(
     limit: int = 20,
     repo: UserRepository = Depends(get_user_repository),
 ):
-    return await repo.get_user_quotes(offset, limit, user_id)
+    return await repo.get_user_quotes(user_id, offset, limit)
 
 
-@router.get('/users/{user_id}/quotes/{quote_id}/progress')
+@router.get('/{user_id}/quotes/{quote_id}/progress')
 async def get_quote_progress(
     user_id: UUID,
     quote_id: int,
@@ -41,7 +41,7 @@ async def get_quote_progress(
     return await repo.get_quote_progress(user_id, quote_id)
 
 
-@router.patch('/users/{user_id}/quotes/{quote_id}/progress')
+@router.patch('/{user_id}/quotes/{quote_id}/progress')
 async def update_progress(
     user_id: UUID,
     quote_id: int,
@@ -52,7 +52,7 @@ async def update_progress(
     return {'message': 'Progress updated'}
 
 
-@router.patch('/users/{user_id}/quotes/{quote_id}/finish')
+@router.patch('/{user_id}/quotes/{quote_id}/finish')
 async def mark_finished(
     user_id: UUID,
     quote_id: int,
@@ -62,7 +62,7 @@ async def mark_finished(
     return {'message': 'Quote marked as finished'}
 
 
-@router.patch('/users/{user_id}/quotes/{quote_id}/like')
+@router.patch('/{user_id}/quotes/{quote_id}/like')
 async def like_quote(
     user_id: UUID,
     quote_id: int,
@@ -72,7 +72,7 @@ async def like_quote(
     return {'message': 'Quote liked'}
 
 
-@router.patch('/users/{user_id}/quotes/{quote_id}/unlike')
+@router.patch('/{user_id}/quotes/{quote_id}/unlike')
 async def unlike_quote(
     user_id: UUID,
     quote_id: int,
@@ -82,11 +82,11 @@ async def unlike_quote(
     return {'message': 'Quote unliked'}
 
 
-@router.get('/users/{user_id}/favorites')
+@router.get('/{user_id}/favorites')
 async def get_favorites(
     user_id: UUID,
     offset: int = 0,
     limit: int = 20,
     repo: UserRepository = Depends(get_user_repository),
 ):
-    return await repo.get_favorites(offset, limit, user_id)
+    return await repo.get_favorites(user_id, offset, limit)
