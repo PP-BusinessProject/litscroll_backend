@@ -5,13 +5,25 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "test",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "litscroll_test",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env.test",
+      "env": {
+        "LOGGING": "DEBUG"
+      },
+    },
+    {
       "name": "api (dev)",
       "type": "debugpy",
       "request": "launch",
       "module": "litscroll_api",
       "console": "integratedTerminal",
       "justMyCode": true,
-      "envFile": "${workspaceFolder}/.env",
+      "envFile": "${workspaceFolder}/.env.dev",
       "env": {
         "LOGGING": "DEBUG"
       },
@@ -23,9 +35,9 @@
       "module": "litscroll_db",
       "console": "integratedTerminal",
       "justMyCode": false,
+      "envFile": "${workspaceFolder}/.env.dev",
       "env": {
         "LOGGING": "DEBUG",
-        "DATABASE_URL": "postgres:postgres@localhost:5432/litscroll"
       }
     },
     {
@@ -35,7 +47,7 @@
       "module": "litscroll_db",
       "console": "integratedTerminal",
       "justMyCode": true,
-      "envFile": "${workspaceFolder}/.env",
+      "envFile": "${workspaceFolder}/.env.prod",
       "env": {
         "LOGGING": "DEBUG"
       },

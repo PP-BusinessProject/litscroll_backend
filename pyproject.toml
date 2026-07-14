@@ -16,10 +16,26 @@
 [project.optional-dependencies]
   linux = ['uvloop==0.22.1']
 [dependency-groups]
-  api = ['uvicorn==0.49.0', 'fastapi==0.139.0']
+  api = ['uvicorn==0.49.0', 'fastapi==0.139.0', 'pydantic-settings==2.14.2']
   dev = ['jurigged==0.6.1', 'pyright==1.1.409', 'ruff==0.15.12']
   db = ['inflect==7.5.0', 'psycopg[binary,pool]==3.3.4']
   db_dev = ['alembic==1.18.4', 'click==8.3.3']
+  test = ['pytest==9.1.1', 'httpx==0.28.1', 'pytest-asyncio==1.4.0']
+
+[tool.pytest.ini_options]
+  minversion = "8.0"
+  testpaths = ["litscroll_test/api"]
+  python_files = ["test_*.py"]
+  python_classes = ["Test*"]
+  python_functions = ["test_*"]
+  asyncio_mode = "auto"
+  addopts = ["-v", "--tb=short", "--strict-markers", "--disable-warnings"]
+  markers = [
+    "api: API integration tests",
+    "repository: Repository tests",
+    "service: Service tests",
+    "db: Database tests",
+  ]
 
 [tool.ruff]
   line-length = 79

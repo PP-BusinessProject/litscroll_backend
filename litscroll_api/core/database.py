@@ -8,10 +8,12 @@ from sqlalchemy.ext.asyncio import (
 
 from .config import get_settings
 
+
 settings = get_settings()
 
 engine = create_async_engine(
-    settings.database_url,
+    'postgresql+asyncpg://'
+    + settings.database_url.split('://')[-1].split('?')[0].strip(),
     echo=settings.debug,
 )
 
