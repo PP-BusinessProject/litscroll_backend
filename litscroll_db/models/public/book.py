@@ -17,6 +17,7 @@ from ..base import Base, Permissions, Policies, TableArgs
 if TYPE_CHECKING:
     from .book_quote import BookQuote
     from .book_genre import BookGenre
+    from .book_excerpt_analysis import BookExcerptAnalysis
 
 
 class Book(Timestamped, Base):
@@ -37,6 +38,11 @@ class Book(Timestamped, Base):
         back_populates='book',
         lazy='noload',
         cascade='save-update, merge, expunge, delete, delete-orphan',
+    )
+    excerpt_analyses: Mapped[list['BookExcerptAnalysis']] = relationship(
+        back_populates='book',
+        lazy='noload',
+        cascade='all, delete-orphan',
     )
 
     __permissions__: ClassVar[Permissions] = dict(
