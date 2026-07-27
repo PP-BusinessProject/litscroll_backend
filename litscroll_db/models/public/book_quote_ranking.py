@@ -13,9 +13,7 @@ if TYPE_CHECKING:
     from .book_quote import BookQuote
 
 
-class ExcerptRanking(Base):
-    __tablename__ = 'excerpt_ranking'
-
+class BookQuoteRanking(Base):
     id: Mapped[int] = Column(
         Integer,
         primary_key=True,
@@ -34,7 +32,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'overall_score BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_overall_score',
         ),
         nullable=False,
     )
@@ -43,7 +40,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'hook_strength BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_hook_strength',
         ),
         nullable=False,
     )
@@ -52,7 +48,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'continue_reading_pressure BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_continue_reading_pressure',
         ),
         nullable=False,
     )
@@ -61,7 +56,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'curiosity BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_curiosity',
         ),
         nullable=False,
     )
@@ -70,7 +64,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'suspense BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_suspense',
         ),
         nullable=False,
     )
@@ -79,7 +72,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'emotional_intensity BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_emotional_intensity',
         ),
         nullable=False,
     )
@@ -88,7 +80,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'beauty_of_writing BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_beauty_of_writing',
         ),
         nullable=False,
     )
@@ -97,7 +88,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'thought_provoking BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_thought_provoking',
         ),
         nullable=False,
     )
@@ -106,7 +96,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'viral_potential BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_viral_potential',
         ),
         nullable=False,
     )
@@ -115,7 +104,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'shareability BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_shareability',
         ),
         nullable=False,
     )
@@ -124,7 +112,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'memorability BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_memorability',
         ),
         nullable=False,
     )
@@ -133,7 +120,6 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'quotation_potential BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_quotation_potential',
         ),
         nullable=False,
     )
@@ -142,11 +128,11 @@ class ExcerptRanking(Base):
         SmallInteger,
         CheckConstraint(
             'discussion_potential BETWEEN 0 AND 100',
-            name='ck_excerpt_ranking_discussion_potential',
         ),
         nullable=False,
     )
 
     quote: Mapped['BookQuote'] = relationship(
         back_populates='ranking',
+        lazy='noload',
     )

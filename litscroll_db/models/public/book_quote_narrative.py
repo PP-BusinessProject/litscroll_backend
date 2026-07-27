@@ -14,9 +14,7 @@ if TYPE_CHECKING:
     from .book_quote import BookQuote
 
 
-class ExcerptNarrative(Base):
-    __tablename__ = 'excerpt_narrative'
-
+class BookQuoteNarrative(Base):
     id: Mapped[int] = Column(
         Integer,
         primary_key=True,
@@ -75,11 +73,11 @@ class ExcerptNarrative(Base):
         Integer,
         CheckConstraint(
             'spoiler_level BETWEEN 0 AND 4',
-            name='ck_excerpt_narrative_spoiler_level',
         ),
         nullable=False,
     )
 
     quote: Mapped['BookQuote'] = relationship(
         back_populates='narrative',
+        lazy='noload',
     )

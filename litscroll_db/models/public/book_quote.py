@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar, List, Self, Type
+from typing import TYPE_CHECKING, ClassVar, List, Self, Type
 
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import relationship
@@ -17,12 +17,12 @@ from .book import Book
 
 
 if TYPE_CHECKING:
-    from .excerpt_engagement_prediction import (
-        ExcerptEngagementPrediction,
+    from .book_quote_engagement_prediction import (
+        BookQuoteEngagementPrediction,
     )
-    from .excerpt_narrative import ExcerptNarrative
-    from .excerpt_ranking import ExcerptRanking
-    from .excerpt_style_analysis import ExcerptStyleAnalysis
+    from .book_quote_narrative import BookQuoteNarrative
+    from .book_quote_ranking import BookQuoteRanking
+    from .book_quote_style_analysis import BookQuoteStyleAnalysis
     from .book_quote_user import BookQuoteUser
 
 
@@ -57,7 +57,7 @@ class BookQuote(Timestamped, Base):
         nullable=False,
     )
 
-    excerpt_text: Mapped[list[list[str]]] = Column(
+    text: Mapped[list[list[str]]] = Column(
         JSONB,
         nullable=False,
     )
@@ -103,12 +103,6 @@ class BookQuote(Timestamped, Base):
         default=list,
     )
 
-    observations: Mapped[dict[str, list[Any]]] = Column(
-        JSONB,
-        nullable=False,
-        default=dict,
-    )
-
     book: Mapped[Book] = relationship(
         back_populates='quotes',
         lazy='noload',
@@ -121,28 +115,28 @@ class BookQuote(Timestamped, Base):
         cascade='save-update, merge, expunge, delete, delete-orphan',
     )
 
-    ranking: Mapped['ExcerptRanking'] = relationship(
+    ranking: Mapped['BookQuoteRanking'] = relationship(
         back_populates='quote',
         lazy='noload',
         uselist=False,
         cascade='save-update, merge, expunge, delete, delete-orphan',
     )
 
-    narrative: Mapped['ExcerptNarrative'] = relationship(
+    narrative: Mapped['BookQuoteNarrative'] = relationship(
         back_populates='quote',
         lazy='noload',
         uselist=False,
         cascade='save-update, merge, expunge, delete, delete-orphan',
     )
 
-    style_analysis: Mapped['ExcerptStyleAnalysis'] = relationship(
+    style_analysis: Mapped['BookQuoteStyleAnalysis'] = relationship(
         back_populates='quote',
         lazy='noload',
         uselist=False,
         cascade='save-update, merge, expunge, delete, delete-orphan',
     )
 
-    engagement_prediction: Mapped['ExcerptEngagementPrediction'] = (
+    engagement_prediction: Mapped['BookQuoteEngagementPrediction'] = (
         relationship(
             back_populates='quote',
             lazy='noload',
