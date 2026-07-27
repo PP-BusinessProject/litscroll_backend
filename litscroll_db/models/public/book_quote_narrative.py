@@ -80,4 +80,5 @@ class BookQuoteNarrative(Base):
     quote: Mapped['BookQuote'] = relationship(
         back_populates='narrative',
         lazy='noload',
+        cascade='save-update',
     )

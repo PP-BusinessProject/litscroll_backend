@@ -135,4 +135,5 @@ class BookQuoteRanking(Base):
     quote: Mapped['BookQuote'] = relationship(
         back_populates='ranking',
         lazy='noload',
+        cascade='save-update',
     )

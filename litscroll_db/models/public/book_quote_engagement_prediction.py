@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from decimal import Decimal
 from typing import TYPE_CHECKING
 
 from sqlalchemy import CheckConstraint, ForeignKey, Integer, SmallInteger
@@ -30,7 +29,7 @@ class BookQuoteEngagementPrediction(Base):
         unique=True,
     )
 
-    stop_scroll_probability: Mapped[Decimal] = Column(
+    stop_scroll_probability: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'stop_scroll_probability BETWEEN 0 AND 100',
@@ -38,7 +37,7 @@ class BookQuoteEngagementPrediction(Base):
         nullable=False,
     )
 
-    finish_probability: Mapped[Decimal] = Column(
+    finish_probability: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'finish_probability BETWEEN 0 AND 100',
@@ -46,7 +45,7 @@ class BookQuoteEngagementPrediction(Base):
         nullable=False,
     )
 
-    like_probability: Mapped[Decimal] = Column(
+    like_probability: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'like_probability BETWEEN 0 AND 100',
@@ -54,7 +53,7 @@ class BookQuoteEngagementPrediction(Base):
         nullable=False,
     )
 
-    save_probability: Mapped[Decimal] = Column(
+    save_probability: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'save_probability BETWEEN 0 AND 100',
@@ -62,7 +61,7 @@ class BookQuoteEngagementPrediction(Base):
         nullable=False,
     )
 
-    share_probability: Mapped[Decimal] = Column(
+    share_probability: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'share_probability BETWEEN 0 AND 100',
@@ -70,7 +69,7 @@ class BookQuoteEngagementPrediction(Base):
         nullable=False,
     )
 
-    continue_book_probability: Mapped[Decimal] = Column(
+    continue_book_probability: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'continue_book_probability BETWEEN 0 AND 100',
@@ -78,7 +77,7 @@ class BookQuoteEngagementPrediction(Base):
         nullable=False,
     )
 
-    reread_probability: Mapped[Decimal] = Column(
+    reread_probability: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'reread_probability BETWEEN 0 AND 100',
@@ -89,4 +88,5 @@ class BookQuoteEngagementPrediction(Base):
     quote: Mapped['BookQuote'] = relationship(
         back_populates='engagement_prediction',
         lazy='noload',
+        cascade='save-update',
     )

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from decimal import Decimal
+
 from typing import TYPE_CHECKING
 
 from sqlalchemy import CheckConstraint, ForeignKey, Integer, SmallInteger
@@ -30,7 +30,7 @@ class BookQuoteStyleAnalysis(Base):
         unique=True,
     )
 
-    dialogue_ratio: Mapped[Decimal] = Column(
+    dialogue_ratio: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'dialogue_ratio BETWEEN 0 AND 100',
@@ -38,7 +38,7 @@ class BookQuoteStyleAnalysis(Base):
         nullable=False,
     )
 
-    description_ratio: Mapped[Decimal] = Column(
+    description_ratio: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'description_ratio BETWEEN 0 AND 100',
@@ -46,7 +46,7 @@ class BookQuoteStyleAnalysis(Base):
         nullable=False,
     )
 
-    action_ratio: Mapped[Decimal] = Column(
+    action_ratio: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'action_ratio BETWEEN 0 AND 100',
@@ -54,7 +54,7 @@ class BookQuoteStyleAnalysis(Base):
         nullable=False,
     )
 
-    reflection_ratio: Mapped[Decimal] = Column(
+    reflection_ratio: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'reflection_ratio BETWEEN 0 AND 100',
@@ -62,7 +62,7 @@ class BookQuoteStyleAnalysis(Base):
         nullable=False,
     )
 
-    reading_difficulty: Mapped[Decimal] = Column(
+    reading_difficulty: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'reading_difficulty BETWEEN 0 AND 100',
@@ -70,7 +70,7 @@ class BookQuoteStyleAnalysis(Base):
         nullable=False,
     )
 
-    context_required: Mapped[Decimal] = Column(
+    context_required: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'context_required BETWEEN 0 AND 100',
@@ -78,7 +78,7 @@ class BookQuoteStyleAnalysis(Base):
         nullable=False,
     )
 
-    works_without_context: Mapped[Decimal] = Column(
+    works_without_context: Mapped[int] = Column(
         SmallInteger,
         CheckConstraint(
             'works_without_context BETWEEN 0 AND 100',
@@ -89,4 +89,5 @@ class BookQuoteStyleAnalysis(Base):
     quote: Mapped['BookQuote'] = relationship(
         back_populates='style_analysis',
         lazy='noload',
+        cascade='save-update',
     )
