@@ -32,7 +32,7 @@ class ExcerptStyleAnalysis(Base):
     )
 
     dialogue_ratio: Mapped[Decimal] = Column(
-        Numeric(0, 100),
+        Numeric(5, 2),
         CheckConstraint(
             'dialogue_ratio BETWEEN 0 AND 100',
             name='ck_style_dialogue_ratio',
@@ -41,7 +41,7 @@ class ExcerptStyleAnalysis(Base):
     )
 
     description_ratio: Mapped[Decimal] = Column(
-        Numeric(0, 100),
+        Numeric(5, 2),
         CheckConstraint(
             'description_ratio BETWEEN 0 AND 100',
             name='ck_style_description_ratio',
@@ -50,7 +50,7 @@ class ExcerptStyleAnalysis(Base):
     )
 
     action_ratio: Mapped[Decimal] = Column(
-        Numeric(0, 100),
+        Numeric(5, 2),
         CheckConstraint(
             'action_ratio BETWEEN 0 AND 100',
             name='ck_style_action_ratio',
@@ -59,7 +59,7 @@ class ExcerptStyleAnalysis(Base):
     )
 
     reflection_ratio: Mapped[Decimal] = Column(
-        Numeric(0, 100),
+        Numeric(5, 2),
         CheckConstraint(
             'reflection_ratio BETWEEN 0 AND 100',
             name='ck_style_reflection_ratio',
@@ -68,7 +68,7 @@ class ExcerptStyleAnalysis(Base):
     )
 
     reading_difficulty: Mapped[Decimal] = Column(
-        Numeric(0, 100),
+        Numeric(5, 2),
         CheckConstraint(
             'reading_difficulty BETWEEN 0 AND 100',
             name='ck_style_reading_difficulty',
@@ -77,7 +77,7 @@ class ExcerptStyleAnalysis(Base):
     )
 
     context_required: Mapped[Decimal] = Column(
-        Numeric(0, 100),
+        Numeric(5, 2),
         CheckConstraint(
             'context_required BETWEEN 0 AND 100',
             name='ck_style_context_required',
@@ -86,7 +86,7 @@ class ExcerptStyleAnalysis(Base):
     )
 
     works_without_context: Mapped[Decimal] = Column(
-        Numeric(0, 100),
+        Numeric(5, 2),
         CheckConstraint(
             'works_without_context BETWEEN 0 AND 100',
             name='ck_style_works_without_context',
