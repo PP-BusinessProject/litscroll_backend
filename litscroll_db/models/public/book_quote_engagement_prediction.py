@@ -23,6 +23,7 @@ class BookQuoteEngagementPrediction(Base):
     quote_id: Mapped[int] = Column(
         ForeignKey(
             BookQuote.id,
+            onupdate='CASCADE',
             ondelete='CASCADE',
         ),
         nullable=False,
@@ -85,7 +86,7 @@ class BookQuoteEngagementPrediction(Base):
         nullable=False,
     )
 
-    quote: Mapped['BookQuote'] = relationship(
+    quote: Mapped[BookQuote] = relationship(
         back_populates='engagement_prediction',
         lazy='noload',
         cascade='save-update',

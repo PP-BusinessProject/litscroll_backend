@@ -24,6 +24,7 @@ class BookQuoteStyleAnalysis(Base):
     quote_id: Mapped[int] = Column(
         ForeignKey(
             BookQuote.id,
+            onupdate='CASCADE',
             ondelete='CASCADE',
         ),
         nullable=False,
@@ -86,7 +87,7 @@ class BookQuoteStyleAnalysis(Base):
         nullable=False,
     )
 
-    quote: Mapped['BookQuote'] = relationship(
+    quote: Mapped[BookQuote] = relationship(
         back_populates='style_analysis',
         lazy='noload',
         cascade='save-update',
